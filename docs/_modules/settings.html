@@ -172,8 +172,8 @@
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">username</span><span class="p">:</span>
         <span class="n">couchDB</span> <span class="o">=</span> <span class="n">couchdb</span><span class="o">.</span><span class="n">Server</span><span class="p">(</span><span class="s2">&quot;http://127.0.0.1:5984/&quot;</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span></div>
-        <span class="n">couchDB</span> <span class="o">=</span> <span class="n">couchdb</span><span class="o">.</span><span class="n">Server</span><span class="p">(</span><span class="s2">&quot;http://</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">@127.0.0.1:5984/&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">couchDB</span> <span class="o">=</span> <span class="n">couchdb</span><span class="o">.</span><span class="n">Server</span><span class="p">(</span><span class="s2">&quot;http://</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">@127.0.0.1:5984/&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="db_initialize"><a class="viewcode-back" href="../settings.html#settings.db_initialize">[docs]</a><span class="k">def</span> <span class="nf">db_initialize</span><span class="p">(</span><span class="n">dbname</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -194,8 +194,8 @@
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span>
-</div>
-    <span class="k">return</span> <span class="n">db</span>
+
+    <span class="k">return</span> <span class="n">db</span></div>
 </pre></div>
 
            </div>

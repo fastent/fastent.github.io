@@ -200,8 +200,8 @@
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
         <span class="k">return</span> <span class="kc">None</span>
-</div>
-    <span class="k">return</span> <span class="n">context_dict</span>
+
+    <span class="k">return</span> <span class="n">context_dict</span></div>
 
 
 
@@ -217,8 +217,8 @@
 <span class="sd">    Returns:</span>
 <span class="sd">         (void)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">proc_list</span><span class="p">[</span><span class="n">iterator</span><span class="p">]:</span></div>
-        <span class="n">_</span> <span class="o">=</span> <span class="n">contextualize</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">dbname</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">proc_list</span><span class="p">[</span><span class="n">iterator</span><span class="p">]:</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">contextualize</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">dbname</span><span class="p">)</span></div>
 
 
 
@@ -241,8 +241,8 @@
 
     <span class="nb">print</span><span class="p">(</span><span class="n">segmented_list</span><span class="p">)</span>
     <span class="n">processes</span> <span class="o">=</span> <span class="p">[</span><span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span> <span class="o">=</span> <span class="n">list_contextualize</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="p">([</span><span class="n">segmented_list</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">iterator</span><span class="p">,</span> <span class="n">dbname</span><span class="p">]))</span> <span class="k">for</span> <span class="n">iterator</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">process_number</span><span class="p">)]</span>
-    <span class="p">[</span><span class="n">process</span><span class="o">.</span><span class="n">start</span><span class="p">()</span> <span class="k">for</span> <span class="n">process</span> <span class="ow">in</span> <span class="n">processes</span><span class="p">]</span></div>
-    <span class="p">[</span><span class="n">process</span><span class="o">.</span><span class="n">join</span><span class="p">()</span> <span class="k">for</span> <span class="n">process</span> <span class="ow">in</span> <span class="n">processes</span><span class="p">]</span>
+    <span class="p">[</span><span class="n">process</span><span class="o">.</span><span class="n">start</span><span class="p">()</span> <span class="k">for</span> <span class="n">process</span> <span class="ow">in</span> <span class="n">processes</span><span class="p">]</span>
+    <span class="p">[</span><span class="n">process</span><span class="o">.</span><span class="n">join</span><span class="p">()</span> <span class="k">for</span> <span class="n">process</span> <span class="ow">in</span> <span class="n">processes</span><span class="p">]</span></div>
 </pre></div>
 
            </div>

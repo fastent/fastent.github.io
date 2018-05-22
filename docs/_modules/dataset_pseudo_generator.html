@@ -154,7 +154,10 @@
   <h1>Source code for dataset_pseudo_generator</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">spacy</span>
 <span class="kn">import</span> <span class="nn">gensim</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">from</span> <span class="nn">text_utils</span> <span class="k">import</span> <span class="n">fuzzy_word_remove</span>
+<span class="kn">from</span> <span class="nn">fast_utils</span> <span class="k">import</span> <span class="n">log_to_text</span>
 
 <div class="viewcode-block" id="spacy_initialize"><a class="viewcode-back" href="../dataset_pseudo_generator.html#dataset_pseudo_generator.spacy_initialize">[docs]</a><span class="k">def</span> <span class="nf">spacy_initialize</span><span class="p">(</span><span class="n">model_name</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -170,8 +173,8 @@
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span>
-</div>
-    <span class="k">return</span> <span class="n">model</span>
+
+    <span class="k">return</span> <span class="n">model</span></div>
 
 
 <div class="viewcode-block" id="gensim_initialize"><a class="viewcode-back" href="../dataset_pseudo_generator.html#dataset_pseudo_generator.gensim_initialize">[docs]</a><span class="k">def</span> <span class="nf">gensim_initialize</span><span class="p">(</span><span class="n">model_name</span><span class="p">):</span>
@@ -182,14 +185,14 @@
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span>
-</div>
-    <span class="k">return</span> <span class="n">model</span>
+
+    <span class="k">return</span> <span class="n">model</span></div>
 
 
 <div class="viewcode-block" id="similar_set_spacy"><a class="viewcode-back" href="../dataset_pseudo_generator.html#dataset_pseudo_generator.similar_set_spacy">[docs]</a><span class="k">def</span> <span class="nf">similar_set_spacy</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">word_list</span><span class="p">,</span> <span class="n">max_similar_amount</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return the List of similar words using the spacy model and suggested word_list</span>
-<span class="sd">    </span>
+
 <span class="sd">    Args:</span>
 <span class="sd">        model (spacy model object): The spacy model</span>
 <span class="sd">        word_list (list): The list of suggestive words</span>
@@ -246,13 +249,45 @@
 
         <span class="n">overlaps</span> <span class="o">=</span> <span class="n">fuzzy_word_remove</span><span class="p">(</span><span class="n">overlaps</span><span class="p">)</span>
 
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">RuntimeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
 
     <span class="n">dataset</span> <span class="o">=</span> <span class="n">overlaps</span>
     <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span> <span class="o">+</span> <span class="n">word_list</span>
-</div>
-    <span class="k">return</span> <span class="n">dataset</span>
+
+    <span class="k">return</span> <span class="n">dataset</span></div>
+
+
+<div class="viewcode-block" id="dataset_generate"><a class="viewcode-back" href="../dataset_pseudo_generator.html#dataset_pseudo_generator.dataset_generate">[docs]</a><span class="k">def</span> <span class="nf">dataset_generate</span><span class="p">(</span><span class="n">model_name</span> <span class="o">=</span> <span class="s1">&#39;en_core_web_sm&#39;</span><span class="p">,</span><span class="n">suggestions</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">max_similar_amount</span> <span class="o">=</span> <span class="mi">100</span><span class="p">):</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">spacy_initialize</span><span class="p">(</span><span class="n">model_name</span><span class="p">)</span>
+        <span class="n">suggestions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">sug</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">suggestions</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">):</span>
+            <span class="n">suggestions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sug</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+
+        <span class="n">similarity_set</span> <span class="o">=</span> <span class="n">similar_set_spacy</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">suggestions</span><span class="p">,</span> <span class="n">max_similar_amount</span><span class="p">)</span>
+
+        <span class="n">log_to_text</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">similarity_set</span><span class="p">),</span> <span class="s2">&quot;raw_data&quot;</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39;API options&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-m&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">dest</span> <span class="o">=</span> <span class="s1">&#39;model_name&#39;</span><span class="p">,</span> <span class="n">help</span> <span class="o">=</span><span class="s1">&#39;designated model name&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-s&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">dest</span> <span class="o">=</span> <span class="s1">&#39;suggestions&#39;</span><span class="p">,</span> <span class="n">help</span> <span class="o">=</span><span class="s1">&#39;entity word sugesstions&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-max&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">dest</span> <span class="o">=</span> <span class="s1">&#39;max_similar_amount&#39;</span><span class="p">,</span> <span class="n">help</span> <span class="o">=</span><span class="s1">&#39;maximum size of resulting dataset&#39;</span><span class="p">)</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">results</span><span class="o">.</span><span class="n">max_similar_amount</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">dataset_generate</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">model_name</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">suggestions</span><span class="p">,</span><span class="n">results</span><span class="o">.</span><span class="n">max_similar_amount</span> <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dataset_generate</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">model_name</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">suggestions</span><span class="p">)</span>
 </pre></div>
 
            </div>
