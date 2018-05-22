@@ -1,4 +1,6 @@
 # fastent
-*fastent* is Python library for named-entity recognition.
+**fastent** is Python library for named-entity recognition.
 
-Read the [docs](/docs) or the [code](/https://github.com/fastent/fastent/)
+Docs: [fastent.github.io/docs](https://fastent.github.io/docs)
+
+Code: [github.com/fastent/fastent/](https://github.com/fastent/fastent/)
