@@ -35,7 +35,7 @@
         /*background-image: url("https://images.pexels.com/photos/97353/pexels-photo-97353.jpeg");*/
         opacity: 0.0;
         filter: blur(20px);
-        transition: opacity 0.5s ease-in;
+        transition: opacity 1.0s ease-in;
         transition: filter 0.5s ease-in;
       }
 
@@ -149,14 +149,14 @@
           setTimeout(function () { // sharpen
             const bgimg = document.getElementById('bgimg');
             bgimg.className = bgimg.className + ' sharp';
-          }, 1000);
+          }, 1500);
 
           setTimeout(function () { // fade out
             const bg = document.getElementById('bg');
             bg.style.backgroundColor = 'white';
             const bgimg = document.getElementById('bgimg');
             bgimg.className = bgimg.className + ' fadeout';
-          }, 2000);
+          }, 2500);
         </script>
       </div>
 
