@@ -129,20 +129,14 @@
           <a class="links" href="https://fastent.github.io/docs/tutorial">tutorial</a>
         </div>
         <script>
-          setTimeout(function () {
-            console.log('fading in');
-            //const bg = document.getElementById('bg');
-            //bg.className = bg.className = ' bgblack';
+          setTimeout(function () { // fade in
             const bgimg = document.getElementById('bgimg');
             bgimg.className = bgimg.className + ' fadein';
           }, 0);
 
-          setTimeout(function () {
-            console.log('fading out');
-
+          setTimeout(function () { // fade out
             const bg = document.getElementById('bg');
             bg.style.backgroundColor = 'white';
-
             const bgimg = document.getElementById('bgimg');
             bgimg.className = bgimg.className + ' fadeout';
           }, 1500);
